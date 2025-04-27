@@ -1,10 +1,15 @@
-public class LoginModel
-{
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
+using System.ComponentModel.DataAnnotations;
 
-    [Required]
-    [MinLength(6)]
-    public string Password { get; set; }
+namespace LoginBackend.Models
+{
+    public class LoginModel
+    {
+        [Required]
+        [EmailAddress]
+        public required string Email { get; set; } // required
+
+        [Required]
+        [MinLength(6)]
+        public required string Password { get; set; } // required
+    }
 }
