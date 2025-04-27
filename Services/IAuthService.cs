@@ -1,9 +1,9 @@
-using LoginBackend.Models;  // Asegúrate de que esté importado el namespace correcto para acceder a User
+using LoginBackend.Models;  // Asegúrate de que esté importado el namespace correcto para acceder a UsuarioRegistro
 
 namespace LoginBackend.Services
 {
     public interface IAuthService
     {
-        string GenerateJwtToken(User user);  // Método para generar el token JWT
+        string GenerateJwtToken(UsuarioRegistro usuarioRegistro);  // Cambié User por UsuarioRegistro
     }
 }

@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt; // Necesario para trabajar con JWT
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using LoginBackend.Models;  // Asegúrate de que la clase User esté en este namespace
+using LoginBackend.Models;  // Asegúrate de que la clase UsuarioRegistro esté en este namespace
 
 namespace LoginBackend.Services
 {
@@ -11,13 +11,18 @@ namespace LoginBackend.Services
     {
         private readonly string _secretKey = "supersecretkey"; // Cambia esto por una clave más segura
 
-        // Implementación del método GenerateJwtToken
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(UsuarioRegistro usuarioRegistro) // Cambié User por UsuarioRegistro
         {
-            var claims = new[]
+            // Verificamos si los valores son nulos antes de usarlos
+            if (usuarioRegistro.UsuCorreo == null || usuarioRegistro.UsuUsuario == null)
             {
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                throw new ArgumentException("El correo o el usuario no pueden ser nulos.");
+            }
+
+            var claims = new[] 
+            {
+                new Claim(ClaimTypes.Name, usuarioRegistro.UsuCorreo ?? string.Empty), // Si UsuCorreo es nulo, usa una cadena vacía
+                new Claim(ClaimTypes.NameIdentifier, usuarioRegistro.UsuUsuario ?? string.Empty) // Si UsuUsuario es nulo, usa una cadena vacía
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
